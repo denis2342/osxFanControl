@@ -37,7 +37,7 @@ int main(int argc, const char *argv[])
 	} else if (argc == 2 && strcmp(argv[1], "run") == 0) {
 		NSAutoreleasePool *pool = [NSAutoreleasePool new];
 		MFDaemon *daemon = [MFDaemon new];
-		NSConnection *connection = [NSConnection defaultConnection];
+		NSConnection *connection = [NSConnection new];
             // register connection
 		[connection setRootObject:daemon];
 		[connection registerName:MFDaemonRegisteredName];
