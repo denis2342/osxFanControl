@@ -18,89 +18,91 @@
 //
 
 #import "MFPreferencePane.h"
+
 #import "MFProtocol.h"
 #import "MFTemperatureTransformer.h"
 #import "MFChartView.h"
 
-
 @implementation MFPreferencePane
 
-
-- (id)initWithBundle:(NSBundle *)bundle
+- (instancetype)initWithBundle:(NSBundle *)bundle
 {
-    if (self = [super initWithBundle:bundle]) {
-        transformer = [MFTemperatureTransformer new];
-        [NSValueTransformer setValueTransformer:transformer forName:@"MFTemperatureTransformer"];
-    }
-    return self;
+	if (self = [super initWithBundle:bundle])
+	{
+		transformer = [MFTemperatureTransformer new];
+		[NSValueTransformer setValueTransformer:transformer forName:@"MFTemperatureTransformer"];
+	}
+
+	return self;
 }
 
 - (void)dealloc
 {
-    [transformer release];
-    [super dealloc];
+	[transformer release];
+	[super dealloc];
 }
 
 - (void)updateOutput:(NSTimer *)aTimer
 {
-    float CPU_A_temp;
-    float CPU_A_HS_temp;
-    float CPU_B_temp;
-    float CPU_B_HS_temp;
-    float Northbridge_temp;
-    float Northbridge_HS_temp;
-    int IntakeFanRpm;
-    int CPU_A_Fan_RPM;
-    int CPU_B_Fan_RPM;
-    int ExhaustFanRpm;
-    int Intake_Min_Fan_Speed;
-    int CPU_A_Fan_Min_Speed;
-    int CPU_B_Fan_Min_Speed;
-    
-    [daemon CPU_A_temp:&CPU_A_temp
-         CPU_A_HS_temp:&CPU_A_HS_temp
-            CPU_B_temp:&CPU_B_temp
-         CPU_B_HS_temp:&CPU_B_HS_temp
-      Northbridge_temp:&Northbridge_temp
+	float CPU_A_temp;
+	float CPU_A_HS_temp;
+	float CPU_B_temp;
+	float CPU_B_HS_temp;
+	float Northbridge_temp;
+	float Northbridge_HS_temp;
+	int IntakeFanRpm;
+	int CPU_A_Fan_RPM;
+	int CPU_B_Fan_RPM;
+	int ExhaustFanRpm;
+	int Intake_Min_Fan_Speed;
+	int CPU_A_Fan_Min_Speed;
+	int CPU_B_Fan_Min_Speed;
+	float Ambient_temp;
+
+	[daemon CPU_A_temp:&CPU_A_temp
+		 CPU_A_HS_temp:&CPU_A_HS_temp
+			CPU_B_temp:&CPU_B_temp
+		 CPU_B_HS_temp:&CPU_B_HS_temp
+	  Northbridge_temp:&Northbridge_temp
    Northbridge_HS_temp:&Northbridge_HS_temp
-          IntakeFanRpm:&IntakeFanRpm
-         CPU_A_Fan_RPM:&CPU_A_Fan_RPM
-         CPU_B_Fan_RPM:&CPU_B_Fan_RPM
-         ExhaustFanRpm:&ExhaustFanRpm
+		  IntakeFanRpm:&IntakeFanRpm
+		 CPU_A_Fan_RPM:&CPU_A_Fan_RPM
+		 CPU_B_Fan_RPM:&CPU_B_Fan_RPM
+		 ExhaustFanRpm:&ExhaustFanRpm
   Intake_Min_Fan_Speed:&Intake_Min_Fan_Speed
    CPU_A_Fan_Min_Speed:&CPU_A_Fan_Min_Speed
-   CPU_B_Fan_Min_Speed:&CPU_B_Fan_Min_Speed];
-    
-    
-    [Northbridge_temp_Field setStringValue:[transformer transformedValue:[NSNumber numberWithFloat:Northbridge_temp]]];
-    [Northbridge_HS_temp_Field setStringValue:[transformer transformedValue:[NSNumber numberWithFloat:Northbridge_HS_temp]]];
-    
-    //***** Intake and Exhaust Stuff *****/
-    [IntakeFanFieldCurrent setIntValue:IntakeFanRpm];
-    [ExhaustFanFieldCurrent setIntValue:ExhaustFanRpm];
-    [Intake_target_RPM setIntValue:Intake_Min_Fan_Speed];
-    [Exhaust_target_RPM setIntValue:Intake_Min_Fan_Speed];
+   CPU_B_Fan_Min_Speed:&CPU_B_Fan_Min_Speed
+		  Ambient_temp:&Ambient_temp];
 
-    //***** CPU A Stuff *****/
-    [CPU_A_FanFieldCurrent setIntValue:CPU_A_Fan_RPM];
-    [CPU_A_temp_Field setStringValue:[transformer transformedValue:[NSNumber numberWithFloat:CPU_A_temp]]];    
-    [CPU_A_HS_temp_Field setStringValue:[transformer transformedValue:[NSNumber numberWithFloat:CPU_A_HS_temp]]];
-    [CPU_A_target_RPM setIntValue:CPU_A_Fan_Min_Speed];
-    [chartView setCurrent_Temp_CPU_A:CPU_A_temp];
-    [chartView setCurrent_Temp_CPU_A_HS:CPU_A_HS_temp];
-    
-    //***** CPU B Stuff *****/
-    if (CPU_B_temp>5) {
-        [CPU_B_FanFieldCurrent setIntValue:CPU_B_Fan_RPM];
-        [CPU_B_temp_Field setStringValue:[transformer transformedValue:[NSNumber numberWithFloat:CPU_B_temp]]];
-        
-        [CPU_B_HS_temp_Field setStringValue:[transformer transformedValue:[NSNumber numberWithFloat:CPU_B_HS_temp]]];
-        
-        [chartView setCurrent_Temp_CPU_B:CPU_B_temp];
-        [CPU_B_target_RPM setIntValue:CPU_B_Fan_Min_Speed];
-    }
-    
-    
+	Ambient_temp_Field.stringValue = [transformer transformedValue:@(Ambient_temp)];
+
+	[Northbridge_temp_Field setStringValue:[transformer transformedValue:@(Northbridge_temp)]];
+	[Northbridge_HS_temp_Field setStringValue:[transformer transformedValue:@(Northbridge_HS_temp)]];
+
+	//***** Intake and Exhaust Stuff *****/
+	[IntakeFanFieldCurrent setIntValue:IntakeFanRpm];
+	[ExhaustFanFieldCurrent setIntValue:ExhaustFanRpm];
+	[Intake_target_RPM setIntValue:Intake_Min_Fan_Speed];
+	[Exhaust_target_RPM setIntValue:Intake_Min_Fan_Speed];
+
+	//***** CPU A Stuff *****/
+	[CPU_A_FanFieldCurrent setIntValue:CPU_A_Fan_RPM];
+	[CPU_A_temp_Field setStringValue:[transformer transformedValue:@(CPU_A_temp)]];    
+	[CPU_A_HS_temp_Field setStringValue:[transformer transformedValue:@(CPU_A_HS_temp)]];
+	[CPU_A_target_RPM setIntValue:CPU_A_Fan_Min_Speed];
+	[chartView setCurrent_Temp_CPU_A:CPU_A_temp];
+	[chartView setCurrent_Temp_CPU_A_HS:CPU_A_HS_temp];
+
+	//***** CPU B Stuff *****/
+	if (CPU_B_temp>5) {
+		[CPU_B_FanFieldCurrent setIntValue:CPU_B_Fan_RPM];
+		[CPU_B_temp_Field setStringValue:[transformer transformedValue:@(CPU_B_temp)]];
+
+		[CPU_B_HS_temp_Field setStringValue:[transformer transformedValue:@(CPU_B_HS_temp)]];
+
+		[chartView setCurrent_Temp_CPU_B:CPU_B_temp];
+		[CPU_B_target_RPM setIntValue:CPU_B_Fan_Min_Speed];
+	}
 }
 
 - (void)awakeFromNib

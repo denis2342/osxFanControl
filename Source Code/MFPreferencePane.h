@@ -17,14 +17,12 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <NSPreferencePane.h>
+#import <PreferencePanes/NSPreferencePane.h>
 
 @class MFDaemon, MFChartView, MFTemperatureTransformer;
 
-
-@interface MFPreferencePane : NSPreferencePane {
-
+@interface MFPreferencePane : NSPreferencePane
+{
     // bindings controller
     IBOutlet NSObjectController *fileOwnerController;
 
@@ -47,7 +45,8 @@
     IBOutlet NSTextField *CPU_A_target_RPM;
     IBOutlet NSTextField *CPU_B_target_RPM;
     IBOutlet NSTextField *Exhaust_target_RPM;
- 
+
+	IBOutlet NSTextField *Ambient_temp_Field;
 
     // chart view
     IBOutlet MFChartView *chartView;

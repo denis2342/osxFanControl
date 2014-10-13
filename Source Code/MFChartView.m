@@ -18,7 +18,6 @@
 //
 
 #import "MFChartView.h"
-#import "MFDefinitions.h"
 #import "MFDaemon.h"
 
 // definitions depending on view size and labels - adjust when changing graph view
@@ -29,6 +28,9 @@
 #define MFGraphMinRpm       0
 #define MFGraphMaxRpm       4500
 
+#define MFMinRpm		400
+#define MFMaxRpm		2800
+#define MFMaxRpm2		4000
 
 @implementation MFChartView
 

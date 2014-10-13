@@ -49,5 +49,7 @@ CPU_B_Fan_RPM:(int *)CPU_B_Fan_RPM
 ExhaustFanRpm:(int *)ExhaustFanRpm
 Intake_Min_Fan_Speed:(int *)Intake_Min_Fan_Speed
 CPU_A_Fan_Min_Speed:(int *)CPU_A_Fan_Min_Speed
-CPU_B_Fan_Min_Speed:(int *)CPU_B_Fan_Min_Speed;
+CPU_B_Fan_Min_Speed:(int *)CPU_B_Fan_Min_Speed
+Ambient_temp:(float *)Ambient_temp;
+
 @end

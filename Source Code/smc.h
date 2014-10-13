@@ -45,6 +45,9 @@
 #define DATATYPE_SP78         "sp78"
 
 /***** Temperature key values *****/
+
+#define SMC_KEY_AMBIENT_TEMP	"TA0P"	// Ambient Temperature
+
 #define SMC_KEY_CPU_A_TEMP      "TCAD" //CPU A Temperature
 #define SMC_KEY_CPU_A_HS_TEMP     "TCAH" //CPU A Heatsink Temperature
 

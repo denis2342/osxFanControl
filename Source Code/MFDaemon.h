@@ -20,23 +20,21 @@
 #import <Cocoa/Cocoa.h>
 #import "MFProtocol.h"
 
-
-@interface MFDaemon : NSObject <MFProtocol> {
-
-    int baseRpm;
-    int baseRpm2;
-    float lowerThreshold;
-    float lowerThreshold2;
-    float upperThreshold;
-    float upperThreshold2;
-    int maxRpm;
-    int maxRpm2;
-    int currentRpm;
-    int currentRpm2;
-    int currentRpm3;
-    BOOL fahrenheit;
-    BOOL needWrite;
-
+@interface MFDaemon : NSObject <MFProtocol>
+{
+	int baseRpm;
+	int baseRpm2;
+	float lowerThreshold;
+	float lowerThreshold2;
+	float upperThreshold;
+	float upperThreshold2;
+	int maxRpm;
+	int maxRpm2;
+	int currentRpm;
+	int currentRpm2;
+	int currentRpm3;
+	BOOL fahrenheit;
+	BOOL needWrite;
 }
 
 - (void)start;
