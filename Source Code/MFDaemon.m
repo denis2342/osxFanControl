@@ -73,51 +73,29 @@
 // read preferences
 - (void)readPreferences
 {
-    CFPropertyListRef property;
-    property = CFPreferencesCopyValue(CFSTR("baseRpm"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        baseRpm = [(NSNumber *)property intValue];
-    }
-    
-    property = CFPreferencesCopyValue(CFSTR("lowerThreshold"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        lowerThreshold = [(NSNumber *)property floatValue];
-    }
-    
-    property = CFPreferencesCopyValue(CFSTR("upperThreshold"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        upperThreshold = [(NSNumber *)property floatValue];
-    }
-    
-    
-    property = CFPreferencesCopyValue(CFSTR("baseRpm2"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        baseRpm2 = [(NSNumber *)property intValue];
-    }
-    
-    property = CFPreferencesCopyValue(CFSTR("lowerThreshold2"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        lowerThreshold2 = [(NSNumber *)property floatValue];
-    }
-    
-    property = CFPreferencesCopyValue(CFSTR("upperThreshold2"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        upperThreshold2 = [(NSNumber *)property floatValue];
-    }
-    
-    
-    
-    property = CFPreferencesCopyValue(CFSTR("fahrenheit"), CFSTR(MFApplicationIdentifier),
-                                      kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
-    if (property) {
-        fahrenheit = [(NSNumber *)property boolValue];
-    }
+	baseRpm = [[self prefByKey:CFSTR("baseRpm")] intValue];
+	lowerThreshold = [[self prefByKey:CFSTR("lowerThreshold")] floatValue];
+	upperThreshold = [[self prefByKey:CFSTR("upperThreshold")] floatValue];
+
+	baseRpm2 = [[self prefByKey:CFSTR("baseRpm2")] intValue];
+	lowerThreshold2 = [[self prefByKey:CFSTR("lowerThreshold2")] floatValue];
+	upperThreshold2 = [[self prefByKey:CFSTR("upperThreshold2")] floatValue];
+
+	fahrenheit = [[self prefByKey:CFSTR("fahrenheit")] boolValue];
+}
+
+- (NSNumber *)prefByKey:(CFStringRef)key
+{
+	CFPropertyListRef property;
+
+	property = CFPreferencesCopyValue(key, CFSTR(MFApplicationIdentifier), kCFPreferencesAnyUser, kCFPreferencesCurrentHost);
+
+	if (property) {
+		CFAutorelease(property);
+		return (NSNumber *)property;
+	}
+
+	return nil;
 }
 
 // this gets called after application start
