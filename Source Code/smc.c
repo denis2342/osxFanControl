@@ -154,20 +154,12 @@ kern_return_t SMCClose()
 
 kern_return_t SMCCall(int index, SMCKeyData_t *inputStructure, SMCKeyData_t *outputStructure)
 {
-    IOItemCount   structureInputSize;
-    IOByteCount   structureOutputSize;
+	size_t   structureInputSize;
+	size_t   structureOutputSize;
+	structureInputSize = sizeof(SMCKeyData_t);
+	structureOutputSize = sizeof(SMCKeyData_t);
 
-    structureInputSize = sizeof(SMCKeyData_t);
-    structureOutputSize = sizeof(SMCKeyData_t);
-
-    return IOConnectMethodStructureIStructureO(
-               conn,
-               index,
-               structureInputSize,
-               &structureOutputSize,
-               inputStructure,
-               outputStructure
-             );
+	return IOConnectCallStructMethod(conn, index, inputStructure, structureInputSize, outputStructure, &structureOutputSize);
 }
 
 kern_return_t SMCReadKey(UInt32Char_t key, SMCVal_t *val)
