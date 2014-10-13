@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <NSPreferencePane.h>
 
-@class MFDaemon, MFChartView, MFCPU_A_tempTransformer;
+@class MFDaemon, MFChartView, MFTemperatureTransformer;
 
 
 @interface MFPreferencePane : NSPreferencePane {
@@ -56,7 +56,7 @@
     MFDaemon *daemon;
 
     // CPU_A_temp transformer
-    MFCPU_A_tempTransformer *transformer;
+    MFTemperatureTransformer *transformer;
 
     // update timer
     NSTimer *timer;
