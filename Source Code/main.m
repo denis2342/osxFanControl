@@ -47,6 +47,7 @@ int main(int argc, const char *argv[])
 		[[NSRunLoop currentRunLoop] run];
 
 		[daemon release];
+		[connection release];
 		[pool release];
     }
     return 0;
