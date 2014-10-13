@@ -38,9 +38,16 @@
 - (BOOL)fahrenheit;
 - (void)setFahrenheit:(BOOL)newFahrenheit;
 - (void)CPU_A_temp:(float *)CPU_A_temp
-        CPU_B_temp:(float *)CPU_B_temp
-      IntakeFanRpm:(int *)IntakeFanRpm
-     CPU_A_Fan_RPM:(int *)CPU_A_Fan_RPM
-     CPU_B_Fan_RPM:(int *)CPU_B_Fan_RPM
-     ExhaustFanRpm:(int *)ExhaustFanRpm;
+CPU_A_HS_temp:(float *)CPU_A_HS_temp
+CPU_B_temp:(float *)CPU_B_temp
+CPU_B_HS_temp:(float *)CPU_B_HS_temp
+Northbridge_temp:(float *)Northbridge_temp
+Northbridge_HS_temp:(float *)Northbridge_HS_temp
+IntakeFanRpm:(int *)IntakeFanRpm
+CPU_A_Fan_RPM:(int *)CPU_A_Fan_RPM
+CPU_B_Fan_RPM:(int *)CPU_B_Fan_RPM
+ExhaustFanRpm:(int *)ExhaustFanRpm
+Intake_Min_Fan_Speed:(int *)Intake_Min_Fan_Speed
+CPU_A_Fan_Min_Speed:(int *)CPU_A_Fan_Min_Speed
+CPU_B_Fan_Min_Speed:(int *)CPU_B_Fan_Min_Speed;
 @end
