@@ -107,7 +107,7 @@
 {
     // connect to daemon
     NSConnection *connection = [NSConnection connectionWithRegisteredName:MFDaemonRegisteredName host:nil];
-    daemon = [[connection rootProxy] retain];
+    daemon = (MFDaemon*)[[connection rootProxy] retain];
     [(id)daemon setProtocolForProxy:@protocol(MFProtocol)];
     
     // set transformer mode
