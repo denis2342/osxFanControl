@@ -115,11 +115,13 @@
     int step2;
     int targetRpm2;
     
-    SMCOpen();
-    
-    temp_io = SMCGetTemperature(SMC_KEY_CPU_A_HS_TEMP);
-    temp_a = SMCGetTemperature(SMC_KEY_CPU_A_TEMP);
-    temp_b = SMCGetTemperature(SMC_KEY_CPU_B_TEMP);
+	io_connect_t conn = 0;
+
+	SMCOpen(&conn);
+
+    temp_io = SMCGetTemperature(SMC_KEY_CPU_A_HS_TEMP, conn);
+    temp_a = SMCGetTemperature(SMC_KEY_CPU_A_TEMP, conn);
+    temp_b = SMCGetTemperature(SMC_KEY_CPU_B_TEMP, conn);
     
     
     //***** Intake and Exhaust Fan *****//
@@ -149,8 +151,8 @@
     
     targetRpm = currentRpm = currentRpm + step;
     
-    SMCSetFanRpm(SMC_KEY_INTAKE_RPM_MIN, targetRpm);
-    SMCSetFanRpm(SMC_KEY_EXHAUST_RPM_MIN, targetRpm);
+    SMCSetFanRpm(SMC_KEY_INTAKE_RPM_MIN, targetRpm, conn);
+    SMCSetFanRpm(SMC_KEY_EXHAUST_RPM_MIN, targetRpm, conn);
     
     temp_use=MAX(temp_a, temp_b);
     
@@ -182,14 +184,14 @@
     
     targetRpm2 = currentRpm2 = currentRpm2 + step2;
     
-    SMCSetFanRpm(SMC_KEY_CPU_A_RPM_MIN, targetRpm2);
+    SMCSetFanRpm(SMC_KEY_CPU_A_RPM_MIN, targetRpm2, conn);
     
     if(temp_b>5){
-    SMCSetFanRpm(SMC_KEY_CPU_B_RPM_MIN, targetRpm2);
+    SMCSetFanRpm(SMC_KEY_CPU_B_RPM_MIN, targetRpm2, conn);
     }
     
     
-    SMCClose();
+    SMCClose(conn);
     
     // save preferences
     if (needWrite) {
@@ -296,54 +298,56 @@ Intake_Min_Fan_Speed:(int *)Intake_Min_Fan_Speed
 CPU_A_Fan_Min_Speed:(int *)CPU_A_Fan_Min_Speed
 CPU_B_Fan_Min_Speed:(int *)CPU_B_Fan_Min_Speed
 {
-    SMCOpen();
-    
+	io_connect_t conn = 0;
+
+	SMCOpen(&conn);
+
     
     //***** Intake and Exhaust Stuff *****/
     if (IntakeFanRpm) {
-        *IntakeFanRpm = SMCGetFanRpm(SMC_KEY_INTAKE_RPM_CUR);
+        *IntakeFanRpm = SMCGetFanRpm(SMC_KEY_INTAKE_RPM_CUR, conn);
     }
     if (Intake_Min_Fan_Speed) {
-        *Intake_Min_Fan_Speed = SMCGetFanRpm(SMC_KEY_INTAKE_RPM_MIN);
+        *Intake_Min_Fan_Speed = SMCGetFanRpm(SMC_KEY_INTAKE_RPM_MIN, conn);
     }
     if (ExhaustFanRpm) {
-        *ExhaustFanRpm = SMCGetFanRpm(SMC_KEY_EXHAUST_RPM_CUR);
+        *ExhaustFanRpm = SMCGetFanRpm(SMC_KEY_EXHAUST_RPM_CUR, conn);
     }
     if (Northbridge_temp) {
-        *Northbridge_temp = SMCGetTemperature(SMC_KEY_Northbridge_TEMP);
+        *Northbridge_temp = SMCGetTemperature(SMC_KEY_Northbridge_TEMP, conn);
     }
     if (Northbridge_HS_temp) {
-        *Northbridge_HS_temp = SMCGetTemperature(SMC_KEY_Northbridge_HS_TEMP);
+        *Northbridge_HS_temp = SMCGetTemperature(SMC_KEY_Northbridge_HS_TEMP, conn);
     }
     
     
     //***** CPU A Stuff *****//
     if (CPU_A_temp) {
-        *CPU_A_temp = SMCGetTemperature(SMC_KEY_CPU_A_TEMP);
+        *CPU_A_temp = SMCGetTemperature(SMC_KEY_CPU_A_TEMP, conn);
     }
     if (CPU_A_HS_temp) {
-        *CPU_A_HS_temp = SMCGetTemperature(SMC_KEY_CPU_A_HS_TEMP);
+        *CPU_A_HS_temp = SMCGetTemperature(SMC_KEY_CPU_A_HS_TEMP, conn);
     }
     if (CPU_A_Fan_RPM) {
-        *CPU_A_Fan_RPM = SMCGetFanRpm(SMC_KEY_CPU_A_RPM_CUR);
+        *CPU_A_Fan_RPM = SMCGetFanRpm(SMC_KEY_CPU_A_RPM_CUR, conn);
     }
     if (CPU_A_Fan_Min_Speed) {
-        *CPU_A_Fan_Min_Speed = SMCGetFanRpm(SMC_KEY_CPU_A_RPM_MIN);
+        *CPU_A_Fan_Min_Speed = SMCGetFanRpm(SMC_KEY_CPU_A_RPM_MIN, conn);
     }
     
     //***** CPU B Stuff *****//
-    if(SMCGetTemperature(SMC_KEY_CPU_B_TEMP)>5){
+    if(SMCGetTemperature(SMC_KEY_CPU_B_TEMP, conn)>5){
         if (CPU_B_temp) {
-            *CPU_B_temp = SMCGetTemperature(SMC_KEY_CPU_B_TEMP);
+            *CPU_B_temp = SMCGetTemperature(SMC_KEY_CPU_B_TEMP, conn);
         }
         if (CPU_B_HS_temp) {
-            *CPU_B_HS_temp = SMCGetTemperature(SMC_KEY_CPU_B_HS_TEMP);
+            *CPU_B_HS_temp = SMCGetTemperature(SMC_KEY_CPU_B_HS_TEMP, conn);
         }
         if (CPU_B_Fan_RPM) {
-            *CPU_B_Fan_RPM = SMCGetFanRpm(SMC_KEY_CPU_B_RPM_CUR);
+            *CPU_B_Fan_RPM = SMCGetFanRpm(SMC_KEY_CPU_B_RPM_CUR, conn);
         }
         if (CPU_B_Fan_Min_Speed) {
-            *CPU_B_Fan_Min_Speed = SMCGetFanRpm(SMC_KEY_CPU_B_RPM_MIN);
+            *CPU_B_Fan_Min_Speed = SMCGetFanRpm(SMC_KEY_CPU_B_RPM_MIN, conn);
         }
     }
     
@@ -351,7 +355,7 @@ CPU_B_Fan_Min_Speed:(int *)CPU_B_Fan_Min_Speed
     
     
     
-    SMCClose();
+    SMCClose(conn);
     
 }
 
