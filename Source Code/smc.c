@@ -173,7 +173,7 @@ kern_return_t SMCReadKey(UInt32Char_t key, SMCVal_t *val)
     memset(val, 0, sizeof(SMCVal_t));
 
     inputStructure.key = _strtoul(key, 4, 16);
-    sprintf(val->key, key);
+    strcpy(val->key, key);
     inputStructure.data8 = SMC_CMD_READ_KEYINFO;    
 
     result = SMCCall(KERNEL_INDEX_SMC, &inputStructure, &outputStructure);
