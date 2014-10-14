@@ -28,7 +28,7 @@
 
 static int cpu_b_failure = 0;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
