@@ -140,8 +140,6 @@ kern_return_t SMCGetKeyInfo(UInt32 key, SMCKeyData_keyInfo_t* keyInfo, io_connec
 	kern_return_t result = kIOReturnSuccess;
 	int i = 0;
 
-	char buffer[5];
-
 	OSSpinLockLock(&g_keyInfoSpinLock);
 
 	for (; i < g_keyInfoCacheCount; ++i)
@@ -173,13 +171,6 @@ kern_return_t SMCGetKeyInfo(UInt32 key, SMCKeyData_keyInfo_t* keyInfo, io_connec
 				++g_keyInfoCacheCount;
 			}
 		}
-		//		_ultostr(buffer, key);
-		//		printf("cache miss: %s\n", buffer);
-	}
-	else
-	{
-		_ultostr(buffer, key);
-		printf("cache hit: %s\n",buffer);
 	}
 
 	OSSpinLockUnlock(&g_keyInfoSpinLock);
